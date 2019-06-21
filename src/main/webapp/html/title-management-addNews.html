@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>套题新增</title>
+        <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no" />
+    <meta charset="utf-8">  
+    <link rel="stylesheet" href="../css/font-awesome.css">
+    <link rel="stylesheet" href="../css/bootstrap.css" />
+    <link rel="stylesheet" href="../css/common.css" />
+    <link rel="stylesheet" href="../css/title-management-add.css"> 
+    <style type="text/css">
+        .J_optionPanel .w-e-text-container{
+            height: 80px !important;
+        }
+    </style>
+</head>
+<body>
+<div class="row">
+    <div class="col-sm-12">
+        <nav class="navbar navbar-default navbar-static-top admin-nav J_admin_nav">
+            <a class="left-toggle pull-left" href="javascript:;">
+                <i class="fa fa-bars fa-lg"></i>
+            </a>
+            <span class="pull-left logo-text menu-list-logo">&nbsp;新闻系统-后台</span>
+            <ul class="nav navbar-nav hello-administrator pull-right">
+                <li>
+                    <span class="menu-list J_adminInfo">你好，小编！</span>
+                </li>
+                <li>
+                    <a class="menu-list J_out" href="../login.html"><i class="fa fa-sign-out"></i>&nbsp;退出登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<!-- 侧边栏 -->
+<ul class="nav nav-pills nav-stacked sidebar col-sm-3">
+    <li id="firstMenu2" class="active">
+        <a class="J_firstMenu" href="javascript:;"><i class="fa fa-bookmark-o"></i>&nbsp;&nbsp;&nbsp;&nbsp;<span >套题管理</span><i class="fa fa-angle-right angle-right"></i></a>
+        <ul>
+            <li><a class="J_menu" href="title-management-list.html">新闻列表</a></li>
+            <li><a class="J_menu" href="title-management-addNews.html">新闻发布</a></li>
+            <li><a class="J_menu" href="title-management-newsMangement.html">新闻管理</a></li>
+            <li><a class="J_menu" href="title-management-search.html">新闻检索</a></li>
+        </ul>
+    </li>
+</ul>
+<!-- 内容 -->
+    <div class="page clearfix">
+        <div class="holder"> 
+            <div class="container"> 
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h4>新闻发布中心</h4>
+                            </div>
+                            <div class="panel-body col-sm-10 col-sm-offset-1 panel-major-body">
+                                <form class="form-horizontal J_searchForm">
+                                    <div class="form-group">
+                                        <div class="col-sm-1-5">
+                                            <label class="control-label margin-left-15 pull-right">题目<span class="necessary">*</span></label>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <input type="text" name="title" class="form-control" id="newsTitle" placeholder="题目">
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <label class="control-label margin-left-15 pull-right">类型<span class="necessary">*</span></label>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <select id="newsType" name="type" class="validator form-control jie w250">
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="panel panel-info box" questionNum="1">
+                                    <div class="top">
+                                        <h4 class="top-left">编辑</h4>
+                                        <a href="title-management-list.html" class="top-right">返回</a>
+                                    </div>
+                                    <div class="panel-body panel-question">
+                                        <!-- panel-question指问题panel，里边的子panel -->
+                                        <form class="form-horizontal J_optionForm">
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label">新闻内容<span class="necessary">*</span></label>
+                                                <div class="col-sm-10" id="div1" style="margin-left: -5px;">
+                                                   <!--  <textarea class="quesDescription" cols="88" rows="6" type="text" name="quesDescription"></textarea> -->
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-footer">
+                                <div class="row">
+                                    <div class="col-sm-6 col-sm-offset-4-5">
+                                        <div class="btn-toolbar">
+                                            <button class="btn btn-success J_save" type="button"><i class="fa fa-save"></i>&nbsp;提交</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/common.js"></script>
+    <script src="../js/wangEditor.min.js"></script>
+    <script src="../js/title-management-addChoose.js"></script>
+</body>
+</html>
