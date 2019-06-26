@@ -26,7 +26,7 @@ $(function(){
 		var password=$("#password").val();
 				$.ajax({
 					type:"post",
-					url:"http://188.131.204.169/loginReginster/teacher/login",
+					url:"http://localhost/login",
 					dataType:"json",
 					data:{
 						username:username,

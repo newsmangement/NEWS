@@ -1,0 +1,7 @@
+
+com.bluemsun.news.aspect
+com.bluemsun.news.controller
+com.bluemsun.news.dao
+com.bluemsun.news.entity
+com.bluemsun.news.service
+com.bluemsun.news.service.serviceImpl

@@ -2,17 +2,55 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>答题系统后台管理登录</title>
+    <title>新闻管理系统登录</title>
+    <link rel="stylesheet" href="../css/bootstrap.css" />
     <link rel="stylesheet" href="css/login.css">
+<script type="application/javascript">
+    function sendCode() {
+        var phoneNum=$('#phone-id').val();
+        $.ajax({
+            type:'get',
+            url:'http://localhost/pub/sendCode/'+phoneNum,
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            dataType: "json",
+            success: function(){
+                 $('#send-btn').text('已发送');
+                 $('#send-btn').attr('disabled',true);
+
+            }
+        })
+    }
+    function addUser() {
+        var name=$('#name-id').val();
+        var username=$('#username-id').val();
+        var password=$('#pwd-id').val();
+        var phoneNum=$('#phone-id').val();
+        var code=$('#code-id').val();
+        var formData=new FormData();
+        formData.append("name",name);
+        formData.append("username",username);
+        formData.append("password",password);
+        formData.append("phoneNum",phoneNum);
+
+        $.ajax({
+            type:'get',
+            url:'http://localhost/pub/reginster/'+code+'?name='+name+'&username='+username+'&password='+password+'&phoneNum='+phoneNum,
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            success: function(rs){
+                alert(rs.ms);
+            }
+        })
+    }
+</script>
 </head>
 <body>
     <div class="main_box">
         <div class="content">
             <h1>新闻管理系统</h1>
-            <form>
+            <form action="/login" method="post">
                 <div class="user">
                     <span>用户名</span>
-                    <input type="text" name="Username" id="userName" placeholder="请输入用户名" >
+                    <input type="text" name="username" id="userName" placeholder="请输入用户名" >
                     <div id="userName-error" class="field_message">
                         <em class="hwic_error">用户名不能为空</em>
                     </div>
@@ -24,13 +62,55 @@
                         <em class="hwic_error">密码不能为空</em>
                     </div>
                 </div>
-                <div class="login-btn">
-                    <div id="thesubmit" class="link-submit js-login-form-btn">登录</div>
+                <div class="login-btn" style="margin-left: 70px; margin-top: 10px;">
+                    <input type="submit" class="btn btn-success" value="登陆" style="background-color: #2e6da4;">
+                    <br><a id="modal-598186" href="#modal-container-598186" role="button" class="btn" data-toggle="modal">还没有密码？请点击注册</a>
+
                 </div>
             </form>
         </div>
     </div>
-     <script src="js/jquery-3.3.1.js"></script>
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+
+                <div class="modal fade" id="modal-container-598186" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title" id="myModalLabel">
+                                    账户注册
+                                </h4>
+                            </div>
+                            <div class="modal-body" style="margin-left: 70px;">
+
+                                姓名：
+                                <input style="width:350px;" type="text" id="name-id" class="form-control" placeholder="name">
+                                用户名：
+                                <input style="width:350px;" type="text" id="username-id" class="form-control" placeholder="username">
+                                密码：
+                                <input style="width:350px;" type="password" id="pwd-id" class="form-control" placeholder="password">
+                                手机号：
+                                <input style="width:350px;" type="text" id="phone-id" class="form-control" placeholder="phonenum"><button style="float: right;margin-top: -35px;margin-right:50px;" type="button" id="send-btn" class="btn btn-success" onclick="sendCode()">发送验证码</button>
+                                验证码：
+                                <input style="width:350px;" type="text" id="code-id" class="form-control" placeholder="verification code">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button> <button type="button" class="btn btn-primary" onclick="addUser()">保存</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
      <script src="js/login.js"></script>
 </body>
 </html>
