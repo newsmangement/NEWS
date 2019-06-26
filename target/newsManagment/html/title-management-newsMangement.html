@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>题目列表</title>
+    <title>新闻管理</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no" />
@@ -9,7 +9,15 @@
     <link rel="stylesheet" href="../css/font-awesome.css" />
     <link rel="stylesheet" href="../css/bootstrap.css" />
     <link rel="stylesheet" href="../css/common.css" />
+    <link rel="stylesheet" href="../css/title-management-add.css">
+    <style type="text/css">
+        .J_optionPanel .w-e-text-container{
+            height: 80px !important;
+        }
+    </style>
     <script type="application/javascript">
+
+
         function getNewsById(newsId) {
             var str="";
             $.ajax({
@@ -72,21 +80,104 @@
             });
         }
         function deleteNews(newsId) {
+            var flag = confirm('是否删除？');
+            if (flag) {
+                $.ajax({
+                    type: 'get',
+                    url: 'http://localhost/news/deleteNews/' + newsId,
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+
+                    dataType: "json",
+                    success: function (rs) {
+                        alert(rs.message);
+                        getAllNews();
+                    },
+                    error: function (message) {
+                        alert("请求发送失败。")
+                    }
+                });
+            }
+        }
+
+
+        function updateNews(newsId) {
+            var E = window.wangEditor;
+            var editor1 = new E('#div1');
+            editor1.create();
+            getNewsType1();
             $.ajax({
                 type:'get',
-                url:'http://localhost/news/deleteNews/'+newsId,
+                url:'http://localhost/news/getNewsById/'+newsId,
                 contentType: "application/x-www-form-urlencoded; charset=utf-8",
-
                 dataType: "json",
                 success: function (rs) {
-                    alert(rs.message);
-                    getAllNews();
+                        $('#newsId_update').val(rs.id);
+                        $('#newsType1').val(rs.type);
+                        $('#newsTitle').val(rs.title);
+                        editor1.txt.html(rs.text);
+
+
+
                 },
                 error: function (message) {
                     alert("请求发送失败。")
                 }
             });
         }
+
+        function getNewsType1(){
+            var str1 = "<option value=\"\">请选择</option>";
+            $.ajax({
+                type:'get',
+                url:'http://localhost/news/getNewsType',
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                data: { },
+                dataType: "json",
+                success: function (rs) {
+                    $('#newsType1').empty();
+                    $.each(rs, function(index, item){
+                        str1+='<option value="'+item.id+'">'+item.param_name+'</option>'
+                    });
+                    $('#newsType1').append(str1);
+                },
+                error: function (message) {
+                    alert("请求发送失败。")
+                }
+            });
+        }
+        function update() {
+            var E = window.wangEditor;
+            var editor2 = new E('#div1');
+            editor2.width=0;
+            editor2.create();
+
+            var
+                title = $('#newsTitle').val(),
+                type= $("#newsType1").val(),
+                text =editor2.txt.html();
+                id=$('#newsId_update').val();
+            var data={
+                title:title,
+                type:type,
+                text:text,
+                id:id
+            };
+            $.ajax({
+                type:"post",
+                url: "http://localhost/news/updateNews",
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                data: data,
+                dataType: "json",
+                success: function (rs) {
+                    alert('修改成功');
+                    window.location.href = "../html/title-management-list.html";
+                },
+                error: function (message) {
+                    alert('操作失败!');
+                }
+            });
+        }
+
     </script>
 </head>
 <body>
@@ -102,7 +193,7 @@
                     <span class="menu-list J_adminInfo">你好，小编！</span>
                 </li>
                 <li>
-                    <a class="menu-list J_out" href="../login.html"><i class="fa fa-sign-out"></i>&nbsp;退出登录</a>
+                    <a class="menu-list J_out" href="/logout"><i class="fa fa-sign-out"></i>&nbsp;退出登录</a>
                 </li>
             </ul>
         </nav>
@@ -111,7 +202,7 @@
 <!-- 侧边栏 -->
 <ul class="nav nav-pills nav-stacked sidebar col-sm-3">
     <li id="firstMenu2" class="active">
-        <a class="J_firstMenu" href="javascript:;"><i class="fa fa-bookmark-o"></i>&nbsp;&nbsp;&nbsp;&nbsp;<span >题目管理</span><i class="fa fa-angle-right angle-right"></i></a>
+        <a class="J_firstMenu" href="javascript:;"><i class="fa fa-bookmark-o"></i>&nbsp;&nbsp;&nbsp;&nbsp;<span >新闻管理</span><i class="fa fa-angle-right angle-right"></i></a>
         <ul>
             <li><a class="J_menu" href="title-management-list.html">新闻列表</a></li>
             <li><a class="J_menu" href="title-management-addNews.html">新闻发布</a></li>
@@ -184,12 +275,60 @@
     </div>
 </div>
 
+<div class="container" style="margin-left: 100px;">
+	<div class="row clearfix" style="margin-left: 100px;">
+		<div class="col-md-12 column" style="margin-left: 100px;">
+			 <!--<a id="modal-224176" href="#modal-container-224176" role="button" class="btn" data-toggle="modal">触发遮罩窗体</a>-->
+			
+			<div class="modal fade" id="modal-container-224176" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-left: 100px;">
+				<div class="modal-dialog" style="margin-left: 300px;">
+					<div class="modal-content" style="width:1000px;height: 600px;">
+                        <div class="form-group" style="margin-top: 50px;">
+                            <div class="col-sm-1-5">
+                                <label class="control-label margin-left-15 pull-right">题目<span class="necessary">*</span></label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" name="title" class="form-control" id="newsTitle" placeholder="题目">
+                            </div>
+                            <div class="col-sm-1">
+                                <label class="control-label margin-left-15 pull-right">类型<span class="necessary">*</span></label>
+                            </div>
+                            <div class="col-sm-4">
+                                <select id="newsType1" name="type" class="validator form-control jie w250">
 
-<input class="hidId" type="hidden"></input>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="panel-body panel-question" style="margin-left:150px;">
+                            <!-- panel-question指问题panel，里边的子panel -->
+                            <form class="form-horizontal J_optionForm">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" style="margin-left:0px;"></label>
+                                    <div class="col-sm-10" id="div1" style="margin-left: -5px;">
+                                        <!--  <textarea class="quesDescription" cols="88" rows="6" type="text" name="quesDescription"></textarea> -->
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+						<div class="modal-footer" style="margin-top:55px;">
+							 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button> <button type="button" class="btn btn-primary" onclick="update()">更新</button>
+						</div>
+					</div>
+					
+				</div>
+				
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+<input id="newsId_update" class="hidId" type="hidden"></input>
 <input class="hidId1" type="hidden"></input>
 <script src="../js/jquery-3.3.1.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/common.js"></script>
+<script src="../js/wangEditor.min.js"></script>
 <script src="../js/title-management-newsMangerMent.js"></script>
 </body>
 </html>

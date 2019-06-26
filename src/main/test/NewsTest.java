@@ -1,3 +1,9 @@
+import com.bluemsun.news.entity.NewsType;
+import com.bluemsun.news.service.SearchEngineService;
+import net.sf.json.JSONObject;
+import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.xcontent.XContentType;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +20,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 /**
- * Created by mafx on 2019/5/15.
+ * @author mafx
+ * <p>单元测试类</p>
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration(value = "src/main/webapp")
@@ -55,5 +62,33 @@ public class NewsTest {
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(url))
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
+    }
+    @Test
+    public void test4() throws Exception {
+        String url;
+        url="/news/keywordSearch?keyword=中国留学生在澳失踪已9个月 警方呼吁公众协助寻人";
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(url))
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+    }
+    @Autowired
+    TransportClient client;
+
+    @Autowired
+    SearchEngineService searchEngineService;
+    @Test
+    public void test5(){
+        String index="news";
+        String type="news";
+        NewsType newsType=new NewsType();
+        newsType.setId(1);
+        newsType.setParam_name("政治");
+        String jsonStr= JSONObject.fromObject(newsType).toString();
+        IndexResponse response=client.prepareIndex(index,type,"1").setSource(jsonStr, XContentType.JSON).get();
+        System.out.println(response.toString());
+    }
+    @Test
+    public void test6(){
+        System.out.println(searchEngineService.searchEng("一国两制"));
     }
 }

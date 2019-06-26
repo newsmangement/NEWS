@@ -71,7 +71,7 @@ $(function(){
             success: function (rs) {
                 $('#newslist').empty();
                 $.each(rs, function(index, item){
-                    str1 +='<tr><td>'+item.id+'</td><td><p onclick="getNewsById('+item.id+')">'+item.title+'</p></td><td>'+item.time+'</td><td>'+item.viewsNum+'</td><td><button type="button" class="btn btn-primary">修改</button>&nbsp;&nbsp;<button type="button" class="btn btn-danger" onclick="deleteNews('+item.id+')">删除</button></td></tr>'
+                    str1 +='<tr><td>'+item.id+'</td><td><p onclick="getNewsById('+item.id+')">'+item.title+'</p></td><td>'+item.time+'</td><td>'+item.viewsNum+'</td><td><button type="button" class="btn btn-primary"><a id="modal-224176" href="#modal-container-224176" style="color: white;" onclick="updateNews('+item.id+')" data-toggle="modal">修改</a></button>&nbsp;&nbsp;<button type="button" class="btn btn-danger" onclick="deleteNews('+item.id+')">删除</button></td></tr>'
 
                 });
                 $('#newslist').append(str1);
