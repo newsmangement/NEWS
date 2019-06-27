@@ -2,12 +2,14 @@ package com.bluemsun.news.service;
 
 import com.bluemsun.news.entity.News;
 import com.bluemsun.news.entity.NewsType;
+import com.bluemsun.news.entity.Result;
+import com.bluemsun.news.entity.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
- * Created by mafx on 2019/5/15.
+ * @author maj
  */
 @Service
 public interface NewsService {
@@ -24,4 +26,14 @@ public interface NewsService {
     List<News> getNewsByType(int newsType);
 
     List<News> sortNewsByAccessNum(int sortType);
+
+    List<News> keywordSearchService(String keyword);
+
+    Result updateNewsService(News news);
+
+    int getMaxId();
+
+    void addUser(User user);
+
+    Boolean isRignlePhoneNum(String phoneNum);
 }
